@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; media-src *; img-src * data: content:;">
+    <title>CR Wildlife - Galería</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/mobile-style.css">
+    <style>
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 8px 0;
+        }
+        .gallery-item {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item.logo-item {
+            border: 2px solid var(--accent-green);
+        }
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.98);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.show {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 22px;
+            cursor: pointer;
+            z-index: 3001;
+        }
+        .lightbox-info {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+        }
+        .lightbox-info h3 {
+            color: var(--accent-green);
+            margin-bottom: 4px;
+        }
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3001;
+        }
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
+    </style>
+</head>
+<body class="mobile-app">
+    <header class="app-header">
+        <div class="header-content">
+            <button class="back-button" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <img src="images/logo-icono.jpg" alt="CR Wildlife" class="app-logo" onerror="this.style.display='none'">
+            <h1 class="app-title">Galería</h1>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <img src="images/logo-icono.jpg" alt="CR Wildlife" class="menu-logo" onerror="this.style.display='none'">
+            <h3>Costa Rica WildLife</h3>
+            <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="about.html"><i class="fas fa-users"></i> Sobre Nosotros</a></li>
+            <li><a href="services.html"><i class="fas fa-tree"></i> Servicios</a></li>
+            <li><a href="gallery.html" class="active"><i class="fas fa-images"></i> Galería</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+        </ul>
+        <div class="menu-lang">
+            <button class="lang-btn" data-lang="es">ES</button>
+            <span class="lang-separator">|</span>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <main class="app-content">
+        <h2 class="section-title">Galería de Expediciones</h2>
+        
+        <div class="gallery-grid" id="galleryGrid"></div>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+            <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
+            <img id="lightbox-img" src="" alt="">
+            <div id="lightbox-info" class="lightbox-info"></div>
+            <button class="lightbox-prev" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-next" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <a href="#" onclick="openWhatsApp(); return false;" class="whatsapp-button">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="services.html" class="nav-item">
+            <i class="fas fa-tree"></i>
+            <span>Servicios</span>
+        </a>
+        <a href="gallery.html" class="nav-item active">
+            <i class="fas fa-images"></i>
+            <span>Galería</span>
+        </a>
+        <a href="contact.html" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contacto</span>
+        </a>
+    </nav>
+
+    <script>
+        const galleryData = [
+            { id: 0, src: 'images/logo-cr-wildlife.jpg', title: 'Costa Rica WildLife Tours', desc: 'Expediciones de vida silvestre, herping y conservación desde 2016', isLogo: true },
+            { id: 1, src: 'images/gallery/photo1.jpg', title: 'Rana de ojos rojos', desc: 'Agalychnis callidryas - Especie emblemática' },
+            { id: 2, src: 'images/gallery/photo2.jpg', title: 'Terciopelo', desc: 'Bothrops asper - Serpiente venenosa' },
+            { id: 3, src: 'images/gallery/photo3.jpg', title: 'Quetzal', desc: 'Pharomachrus mocinno - Ave sagrada' },
+            { id: 4, src: 'images/gallery/photo4.jpg', title: 'Tucán pico iris', desc: 'Ramphastos sulfuratus' },
+            { id: 5, src: 'images/gallery/photo5.jpg', title: 'Rana venenosa', desc: 'Dendrobates auratus' },
+            { id: 6, src: 'images/gallery/photo6.jpg', title: 'Boa constrictora', desc: 'Boa imperator' },
+            { id: 7, src: 'images/gallery/photo7.jpg', title: 'Colibrí', desc: 'Trochilidae - Más de 50 especies' },
+            { id: 8, src: 'images/gallery/photo8.jpg', title: 'Sapo arlequín', desc: 'Atelopus varius - En peligro crítico' },
+            { id: 9, src: 'images/gallery/photo9.jpg', title: 'Lapa roja', desc: 'Ara macao - Guacamaya' },
+            { id: 10, src: 'images/gallery/photo10.jpg', title: 'Expedición nocturna', desc: 'Herping con linternas UV' }
+        ];
+
+        let currentIndex = 0;
+
+        function loadGallery() {
+            const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
+            
+            galleryData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `gallery-item ${item.isLogo ? 'logo-item' : ''}`;
+                div.onclick = () => openLightbox(index);
+                
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.alt = item.title;
+                img.onerror = function() { this.style.backgroundColor = '#333'; };
+                
+                div.appendChild(img);
+                grid.appendChild(div);
+            });
+        }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const item = galleryData[index];
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const info = document.getElementById('lightbox-info');
+            
+            img.src = item.src;
+            info.innerHTML = `<h3>${item.title}</h3><p>${item.desc}</p>`;
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (event.target === lightbox || event.target.classList.contains('lightbox-close')) {
+                lightbox.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = galleryData.length - 1;
+            if (currentIndex >= galleryData.length) currentIndex = 0;
+            
+            const item = galleryData[currentIndex];
+            const img = document.getElementById('lightbox-img');
+            const info = document.getElementById('lightbox-info');
+            
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = item.src;
+                info.innerHTML = `<h3>${item.title}</h3><p>${item.desc}</p>`;
+                img.style.opacity = '1';
+            }, 200);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('show')) return;
+            
+            if (e.key === 'ArrowLeft') changeImage(-1);
+            if (e.key === 'ArrowRight') changeImage(1);
+            if (e.key === 'Escape') {
+                lightbox.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        loadGallery();
+    </script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/cordova-app.js"></script>
+</body>
+</html>

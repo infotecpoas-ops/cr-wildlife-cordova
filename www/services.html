@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline'; media-src *; img-src * data: content:;">
+    <title>CR Wildlife - Servicios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/mobile-style.css">
+    <style>
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            padding: 16px 0;
+        }
+        .service-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .service-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #333;
+        }
+        .service-content {
+            padding: 16px;
+        }
+        .service-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--accent-green);
+        }
+        .service-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        .service-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+        .btn-card {
+            padding: 8px 20px;
+            background: var(--accent-green);
+            border-radius: 20px;
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0 16px;
+            margin-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            border-color: var(--accent-green);
+        }
+    </style>
+</head>
+<body class="mobile-app">
+    <header class="app-header">
+        <div class="header-content">
+            <button class="back-button" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <img src="images/logo-icono.jpg" alt="CR Wildlife" class="app-logo" onerror="this.style.display='none'">
+            <h1 class="app-title">Servicios</h1>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <img src="images/logo-icono.jpg" alt="CR Wildlife" class="menu-logo" onerror="this.style.display='none'">
+            <h3>Costa Rica WildLife</h3>
+            <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="about.html"><i class="fas fa-users"></i> Sobre Nosotros</a></li>
+            <li><a href="services.html" class="active"><i class="fas fa-tree"></i> Servicios</a></li>
+            <li><a href="gallery.html"><i class="fas fa-images"></i> Galería</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+        </ul>
+        <div class="menu-lang">
+            <button class="lang-btn" data-lang="es">ES</button>
+            <span class="lang-separator">|</span>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <main class="app-content">
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="filterServices('todos')">Todos</button>
+            <button class="tab-btn" onclick="filterServices('herping')">Herping</button>
+            <button class="tab-btn" onclick="filterServices('aves')">Aves</button>
+            <button class="tab-btn" onclick="filterServices('ciencia')">Ciencia</button>
+            <button class="tab-btn" onclick="filterServices('conservacion')">Conservación</button>
+        </div>
+
+        <div class="services-grid" id="servicesGrid">
+            <!-- Herping -->
+            <div class="service-card" data-category="herping">
+                <img src="images/service-herping1.jpg" alt="Herping" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Expediciones de Herping</h3>
+                    <p>Tours nocturnos y diurnos para observar anfibios y reptiles en su hábitat natural.</p>
+                    <div class="service-footer">
+                        <span class="price">$75</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="herping">
+                <img src="images/service-herping2.jpg" alt="Viper Trax" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Viper Trax</h3>
+                    <p>Seguimiento de serpientes venenosas con todas las medidas de seguridad.</p>
+                    <div class="service-footer">
+                        <span class="price">$120</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="herping">
+                <img src="images/service-herping3.jpg" alt="Herping nocturno" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Tours Nocturnos</h3>
+                    <p>Exploración nocturna con linternas UV para encontrar especies únicas.</p>
+                    <div class="service-footer">
+                        <span class="price">$65</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aves -->
+            <div class="service-card" data-category="aves">
+                <img src="images/birds-1.jpg" alt="Birding" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Observación de Aves</h3>
+                    <p>Tours especializados para ver quetzales, tucanes y más de 900 especies.</p>
+                    <div class="service-footer">
+                        <span class="price">$65</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="aves">
+                <img src="images/birds-2.jpg" alt="Fotografía de aves" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Fotografía de Aves</h3>
+                    <p>Sesiones especializadas con guías ornitólogos y equipo profesional.</p>
+                    <div class="service-footer">
+                        <span class="price">$90</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="aves">
+                <img src="images/birds-3.jpg" alt="Quetzal" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Tour del Quetzal</h3>
+                    <p>Expedición especial para observar al resplandeciente quetzal en bosque nuboso.</p>
+                    <div class="service-footer">
+                        <span class="price">$85</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ciencia -->
+            <div class="service-card" data-category="ciencia">
+                <img src="images/service-science1.jpg" alt="Taller científico" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Talleres Científicos</h3>
+                    <p>Identificación de especies, métodos de registro y protocolos de investigación.</p>
+                    <div class="service-footer">
+                        <span class="price">$90</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="ciencia">
+                <img src="images/service-science2.jpg" alt="Fotografía científica" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Fotografía Científica</h3>
+                    <p>Técnicas de macrofotografía y documentación de comportamiento animal.</p>
+                    <div class="service-footer">
+                        <span class="price">$95</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="ciencia">
+                <img src="images/service-science3.jpg" alt="Registro de datos" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Registro Científico</h3>
+                    <p>Uso de eBird, iNaturalist y metodologías de muestreo en campo.</p>
+                    <div class="service-footer">
+                        <span class="price">$80</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conservación -->
+            <div class="service-card" data-category="conservacion">
+                <img src="images/research-3.jpg" alt="Conservación" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Proyectos de Conservación</h3>
+                    <p>Participa en la protección de especies amenazadas como sapos arlequín.</p>
+                    <div class="service-footer">
+                        <span class="price">Voluntariado</span>
+                        <a href="contact.html" class="btn-card">Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" data-category="conservacion">
+                <img src="images/hero5.jpg" alt="Monitoreo" onerror="this.style.backgroundColor='#333'">
+                <div class="service-content">
+                    <h3>Monitoreo de Fauna</h3>
+                    <p>Instalación de cámaras trampa y seguimiento de poblaciones.</p>
+                    <div class="service-footer">
+                        <span class="price">$70</span>
+                        <a href="contact.html" class="btn-card">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" onclick="openWhatsApp(); return false;" class="whatsapp-button">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="services.html" class="nav-item active">
+            <i class="fas fa-tree"></i>
+            <span>Servicios</span>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <i class="fas fa-images"></i>
+            <span>Galería</span>
+        </a>
+        <a href="contact.html" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contacto</span>
+        </a>
+    </nav>
+
+    <script>
+        function filterServices(category) {
+            const cards = document.querySelectorAll('.service-card');
+            const tabs = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent.toLowerCase().includes(category) || 
+                    (category === 'todos' && tab.textContent === 'Todos')) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            cards.forEach(card => {
+                if (category === 'todos' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Detectar categoría desde URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        if (category) {
+            filterServices(category);
+        }
+    </script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/cordova-app.js"></script>
+</body>
+</html>
