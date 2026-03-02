@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.crwildlife.tours" 
+        version="1.0.0" 
+        xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <name>Costa Rica WildLife Tours</name>
+    <description>Expediciones de vida silvestre, herping y conservación en Costa Rica</description>
+    <author email="crlifewildtours@gmail.com" href="https://crwildlife.com">
+        CR Wildlife Tours
+    </author>
+    
+    <content src="index.html" />
+    
+    <!-- ===== ACCESO A URLS ===== -->
+    <access origin="*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
+    
+    <!-- ===== PERMISOS PARA WHATSAPP Y REDES SOCIALES ===== -->
+    <allow-intent href="https://wa.me/*" />
+    <allow-intent href="whatsapp://*" />
+    <allow-intent href="https://api.whatsapp.com/*" />
+    <allow-intent href="https://web.whatsapp.com/*" />
+    <allow-intent href="https://facebook.com/*" />
+    <allow-intent href="https://fb.com/*" />
+    <allow-intent href="fb://*" />
+    <allow-intent href="https://instagram.com/*" />
+    <allow-intent href="https://youtube.com/*" />
+    <allow-intent href="https://twitter.com/*" />
+    
+    <!-- ===== PERMISOS PARA CORREO ===== -->
+    <allow-intent href="mailto:*" />
+    <allow-intent href="mailto:crlifewildtours@gmail.com" />
+    <allow-intent href="https://mail.google.com/*" />
+    
+    <!-- ===== PERMISOS PARA TELÉFONO ===== -->
+    <allow-intent href="tel:*" />
+    <allow-intent href="tel:+50672565865" />
+    <allow-intent href="sms:*" />
+    
+    <!-- ===== PERMISOS PARA MAPAS ===== -->
+    <allow-intent href="geo:*" />
+    <allow-intent href="https://maps.google.com/*" />
+    <allow-intent href="https://www.google.com/maps/*" />
+    
+    <!-- ===== CONFIGURACIÓN PARA ANDROID ===== -->
+    <platform name="android">
+        <!-- Permisos en AndroidManifest.xml -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <!-- Internet y red -->
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            
+            <!-- Geolocalización -->
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            
+            <!-- Cámara y almacenamiento -->
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            
+            <!-- Teléfono y SMS -->
+            <uses-permission android:name="android.permission.CALL_PHONE" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.SEND_SMS" />
+            
+            <!-- Vibración para notificaciones -->
+            <uses-permission android:name="android.permission.VIBRATE" />
+        </config-file>
+        
+        <!-- Intent filters para WhatsApp y enlaces -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="wa.me" />
+                <data android:scheme="https" android:host="api.whatsapp.com" />
+                <data android:scheme="whatsapp" />
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="mailto" />
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tel" />
+            </intent-filter>
+            
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="facebook.com" />
+                <data android:scheme="https" android:host="www.facebook.com" />
+                <data android:scheme="fb" />
+            </intent-filter>
+        </config-file>
+        
+        <!-- Iconos para Android -->
+        <icon density="ldpi" src="www/images/icons/icon-36x36.png" />
+        <icon density="mdpi" src="www/images/icons/icon-48x48.png" />
+        <icon density="hdpi" src="www/images/icons/icon-72x72.png" />
+        <icon density="xhdpi" src="www/images/icons/icon-96x96.png" />
+        <icon density="xxhdpi" src="www/images/icons/icon-144x144.png" />
+        <icon density="xxxhdpi" src="www/images/icons/icon-192x192.png" />
+        
+        <!-- Splash screens -->
+        <splash density="land-hdpi" src="www/images/icons/splash-land-hdpi.png" />
+        <splash density="port-hdpi" src="www/images/icons/splash-port-hdpi.png" />
+    </platform>
+    
+    <!-- ===== CONFIGURACIÓN PARA iOS ===== -->
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        
+        <!-- Permisos iOS -->
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+                <string>whatsapp</string>
+                <string>fb</string>
+                <string>fbapi</string>
+                <string>instagram</string>
+                <string>googlemaps</string>
+                <string>mailto</string>
+                <string>tel</string>
+            </array>
+        </config-file>
+        
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string>Necesitamos tu ubicación para mostrarte los mejores lugares de herping cerca de ti</string>
+        </config-file>
+        
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>Para que puedas tomar fotos durante tus expediciones</string>
+        </config-file>
+        
+        <icon height="180" src="www/images/icons/icon-60@3x.png" width="180" />
+    </platform>
+    
+    <!-- ===== PLUGINS ===== -->
+    <plugin name="cordova-plugin-whitelist" spec="*" />
+    <plugin name="cordova-plugin-splashscreen" spec="*" />
+    <plugin name="cordova-plugin-statusbar" spec="*" />
+    <plugin name="cordova-plugin-network-information" spec="*" />
+    <plugin name="cordova-plugin-inappbrowser" spec="*" />
+    <plugin name="cordova-plugin-geolocation" spec="*" />
+    <plugin name="cordova-plugin-camera" spec="*" />
+    <plugin name="cordova-plugin-file" spec="*" />
+    <plugin name="cordova-plugin-file-transfer" spec="*" />
+    <plugin name="cordova-plugin-dialogs" spec="*" />
+    <plugin name="cordova-plugin-vibration" spec="*" />
+    <plugin name="cordova-plugin-device" spec="*" />
+    <plugin name="cordova-plugin-contacts" spec="*" />
+    <plugin name="cordova-plugin-sms" spec="*" />
+    
+    <!-- ===== PREFERENCIAS GENERALES ===== -->
+    <preference name="Fullscreen" value="false" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarBackgroundColor" value="#0a0a0a" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value="300" />
+    
+    <!-- Permitir enlaces externos -->
+    <preference name="scheme" value="https" />
+    <preference name="hostname" value="*" />
+</widget>
