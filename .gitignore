@@ -1,0 +1,63 @@
+# Dependencias
+node_modules/
+platforms/
+plugins/
+
+# Archivos de compilación
+*.apk
+*.ipa
+*.aab
+*.jar
+*.class
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Directorios del sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+.project
+.classpath
+
+# Entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de recursos generados
+resources/android/
+resources/ios/
+
+# Ionic/Appflow
+www/**/*.map
+.ionic/
+.ionide
+
+# Carpeta de hooks (excepto si tienen código)
+hooks/*.js
+!hooks/README.md
+
+# Certificados y keys
+*.keystore
+*.jks
+*.p12
+*.mobileprovision
+*.p8
+*.pem
+*.key
+
+# Secrets
+secrets/
+secure-notes.txt

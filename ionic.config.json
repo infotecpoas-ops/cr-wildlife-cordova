@@ -1,0 +1,12 @@
+{
+  "name": "Costa Rica WildLife Tours",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "custom",
+  "id": "com.crwildlife.tours",
+  "hooks": {
+    "build:before": "./hooks/before_build.js",
+    "build:after": "./hooks/after_build.js"
+  }
+}
