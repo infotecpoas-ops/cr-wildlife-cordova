@@ -41,7 +41,8 @@
     "cordova-plugin-whitelist": "^1.3.5"
   },
   "devDependencies": {
-    "cordova-res": "^0.15.4"
+    "cordova-res": "^0.15.4",
+    "cordova-paramedic": "github:apache/cordova-paramedic" 
   },
   "cordova": {
     "platforms": [
